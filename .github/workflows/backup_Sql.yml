@@ -9,28 +9,34 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
+    
+env:
+  PROD_DATABASE_HOST: ${{ secrets.PROD_DATABASE_HOST }}
+  PROD_DATABASE_USER: ${{ secrets.PROD_DATABASE_USER }}
+  PROD_DATABASE_PASSWORD: ${{ secrets.PROD_DATABASE_PASSWORD }}
 
   # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
   build:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
+    runs-on: self-hosted
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
+    - uses: actions/checkout@v2
+    - name: Install & Setup MySQL
+      run: 
+        sudo apt-get -y install mysql-client
+        mysql --version
+        crds="[mysqldump]\nuser=$PROD_DATABASE_USER
+        \npassword=$PROD_DATABASE_PASSWORD\nhost=$PROD_DATABASE_HOST\nport=3306"
+        echo -e $crds > login.cnf
+        cat login.cnf
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
-
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+        filename=$(date +%Y%m%dT%H%M%S)-backup
+        mysqldump --defaults-extra-file=login.cnf \
+          --single-transaction \
+          --events \
+          --routines \
+          --triggers \
+          --databases test_gg | gzip > ${filename}.gz
+        stat -c %s ${filename}.gz
+        echo Done
