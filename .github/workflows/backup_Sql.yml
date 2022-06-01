@@ -9,10 +9,10 @@ jobs:
       - uses: actions/checkout@v2 
       - name: Deploy in EC2
         env:
-           PROD_DATABASE_HOST: ${{ secrets.PROD_DATABASE_HOST }}
-           PROD_DATABASE: ${{ secrets.PROD_DATABASE }}
-           PROD_DATABASE_USER: ${{ secrets.PROD_DATABASE_USER }}
-           PROD_DATABASE_PASSWORD: ${{ secrets.PROD_DATABASE_PASSWORD }}
+           HOST : ${{ secrets.PROD_DATABASE_HOST }}
+           DATABASE : ${{ secrets.PROD_DATABASE }}
+           USER : ${{ secrets.PROD_DATABASE_USER }}
+           PASSWORD : ${{ secrets.PROD_DATABASE_PASSWORD }}
             
         run: |
 
@@ -20,5 +20,5 @@ jobs:
            mysql --version
             
            filename=$(date +%Y%m%dT%H%M%S)-backup
-           sudo mysqldump -u  $PROD_DATABASE_USER -h $PROD_DATABASE_HOST $PROD_DATABASE -P 3306 -p $PROD_DATABASE_PASSWORD  > $filename.sql
+           sudo mysqldump -u  $USER -h $HOST $DATABASE -P 3306 -p $PASSWORD  > $filename.sql
 
