@@ -22,5 +22,6 @@ jobs:
            \npassword=$PROD_DATABASE_PASSWORD\nhost=$PROD_DATABASE_HOST\nport=3306\ndatabase=$PROD_DATABASE"
            echo -e $crds > login.cnf
            cat login.cnf
-
+           filename=$(date +%Y%m%dT%H%M%S)-backup
+           mysqldump --defaults-extra-file=login.cnf | gzip > ${filename}.gz 
 
