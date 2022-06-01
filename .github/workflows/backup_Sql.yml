@@ -23,5 +23,5 @@ jobs:
            echo -e $crds > login.cnf
            cat login.cnf
            filename=$(date +%Y%m%dT%H%M%S)-backup
-           mysqldump --defaults-extra-file=login.cnf | gzip > ${filename}.gz 
+           mysqldump --defaults-extra-file=login.cnf  --databases drupal1 | gzip > ${filename}.gz 
 
