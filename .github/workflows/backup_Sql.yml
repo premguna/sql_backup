@@ -22,17 +22,5 @@ jobs:
            \npassword=$PROD_DATABASE_PASSWORD\nhost=$PROD_DATABASE_HOST\nport=3306\ndatabase=$PROD_DATABASE"
            echo -e $crds > login.cnf
            cat login.cnf
-<<<<<<< HEAD
-           
-=======
 
-           filename=$(date +%Y%m%dT%H%M%S)-backup
-           mysqldump --defaults-extra-file=login.cnf \
-           --single-transaction \
-           --events \
-           --routines \
-           --triggers \
-           --databases drupal1 | gzip > ${filename}.gz 
-           stat -c %s ${filename}.gz
-           echo Done
->>>>>>> 719e2f8d52d30a454d0712f5e1f6be46ef33ddb9
+
