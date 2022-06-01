@@ -19,5 +19,5 @@ jobs:
            mysql --version
             
            filename=$(date +%Y%m%dT%H%M%S)-backup
-           sudo mysqldump -u  $PROD_DATABASE_USER -h PROD_DATABASE_HOST drupal1 -p PROD_DATABASE_PASSWORD > $filename.sql 
+           sudo mysqldump -u  $PROD_DATABASE_USER -h PROD_DATABASE_HOST drupal1 -p PROD_DATABASE_PASSWORD > $filename.sql
 
