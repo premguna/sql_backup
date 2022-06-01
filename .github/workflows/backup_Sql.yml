@@ -10,6 +10,7 @@ jobs:
       - name: Deploy in EC2
         env:
            PROD_DATABASE_HOST: ${{ secrets.PROD_DATABASE_HOST }}
+           PROD_DATABASE: ${{ secrets.PROD_DATABASE }}
            PROD_DATABASE_USER: ${{ secrets.PROD_DATABASE_USER }}
            PROD_DATABASE_PASSWORD: ${{ secrets.PROD_DATABASE_PASSWORD }}
             
@@ -19,5 +20,5 @@ jobs:
            mysql --version
             
            filename=$(date +%Y%m%dT%H%M%S)-backup
-           sudo mysqldump -u  $PROD_DATABASE_USER -h PROD_DATABASE_HOST drupal1 -p PROD_DATABASE_PASSWORD > $filename.sql
+           sudo mysqldump -u  $PROD_DATABASE_USER -h $PROD_DATABASE_HOST $PROD_DATABASE -p $PROD_DATABASE_PASSWORD > $filename.sql
 
