@@ -18,10 +18,7 @@ jobs:
 
            sudo apt-get -y install mysql-client
            mysql --version
-           crds="[mysqldump]\nuser=$PROD_DATABASE_USER
-           \npassword=$PROD_DATABASE_PASSWORD\nhost=$PROD_DATABASE_HOST\nport=3306"
-           echo -e $crds > login.cnf
-           cat login.cnf
+            
            filename=$(date +%Y%m%dT%H%M%S)-backup
-           sudo mysqldump --defaults-extra-file=login.cnf  --databases drupal1 | gzip > ${filename}.gz 
+           sudo mysqldump -u  $PROD_DATABASE_USER -h PROD_DATABASE_HOST $PROD_DATABASE -p PROD_DATABASE_PASSWORD > $filename.sql 
 
