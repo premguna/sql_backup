@@ -30,4 +30,4 @@ jobs:
            --triggers \
            --databases drupal1 | gzip > ${filename}.gz 
            stat -c %s ${filename}.gz
-           echo Done 
+           echo Done
