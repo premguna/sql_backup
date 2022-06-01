@@ -20,5 +20,5 @@ jobs:
            mysql --version
             
            filename=$(date +%Y%m%dT%H%M%S)-backup
-           sudo mysqldump -u  $USER -h $HOST $DATABASE -P 3306 -p $PASSWORD  > $filename.sql
+           mysql -u drupal1 drupal1 -h 100.26.48.76 -P 33060 -p Welcome@!12 > test.sql
 
